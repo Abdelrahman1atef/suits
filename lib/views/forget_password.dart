@@ -26,7 +26,7 @@ class ForgetPasswordView extends StatelessWidget {
               "Enter your email or your phone number, we will send you confirmation code",
               style: theme.textTheme.labelLarge?.copyWith(fontSize: 18),
             ),
-            AppToggleButton(),
+            const AppToggleButton(),
             const SizedBox(height: 32),
             Row(
               children: [
@@ -65,7 +65,7 @@ class _AppToggleButtonState extends State<AppToggleButton> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          padding: EdgeInsetsDirectional.all(5),
+          padding: const EdgeInsetsDirectional.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             border: Border.all(color: theme.colorScheme.outline, width: 1),
@@ -85,7 +85,7 @@ class _AppToggleButtonState extends State<AppToggleButton> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: isEmail ? Color(0xFFF9FAFB) : null,
+                    color: isEmail ? const Color(0xFFF9FAFB) : null,
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: AppText(
@@ -108,7 +108,7 @@ class _AppToggleButtonState extends State<AppToggleButton> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: !isEmail ? Color(0xFFF9FAFB) : null,
+                    color: !isEmail ? const Color(0xFFF9FAFB) : null,
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: AppText(
@@ -127,8 +127,8 @@ class _AppToggleButtonState extends State<AppToggleButton> {
         AppInputText(
           hintText: isEmail ? "Enter your email" : "Enter your phone number",
           icon: isEmail
-              ? AppImage(image: "unfiled_email.png")
-              : AppImage(image: "filled_phone.png"),
+              ? const AppImage(image: "unfiled_email.png")
+              : const AppImage(image: "filled_phone.png"),
         ),
       ],
     );
