@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:suits/core/widgets/app_button.dart';
+import 'package:suits/core/widgets/app_otp.dart';
+import 'package:suits/views/create_password.dart';
 
 import '../core/widgets/app_bar.dart';
 import '../core/widgets/app_text.dart';
@@ -11,7 +13,7 @@ class OtpView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor.withValues(alpha: 0.8),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(haveTitle: false, haveSearchBar: false),
       body: Padding(
         padding: const EdgeInsetsGeometry.symmetric(horizontal: 19),
@@ -39,30 +41,56 @@ class OtpView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 33),
-            PinCodeTextField(
-              appContext: context,
-              length: 4,
-              animationType: AnimationType.fade,
-              hintCharacter: "-",
-              hintStyle: TextStyle(fontSize: 25,),
-              textStyle: theme.textTheme.titleLarge,
-              keyboardType: TextInputType.number,
-              pinTheme: PinTheme(
-                shape: PinCodeFieldShape.box,
-                borderRadius: BorderRadius.circular(16),
-                fieldHeight: 64,
-                fieldWidth: 64,
-                borderWidth: 1.5,
-                errorBorderColor: theme.colorScheme.error,
-                activeColor: theme.primaryColor,
-                inactiveColor: theme.scaffoldBackgroundColor,
-                selectedColor: theme.primaryColor,
-                inactiveBorderWidth: 0,
-
-                activeFillColor: theme.colorScheme.secondary,
-                inactiveFillColor: theme.colorScheme.secondary,
-                selectedFillColor: theme.colorScheme.secondary,
-              ),
+            const Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 50),
+              child: AppOtp(length: 4),
+            ),
+            const SizedBox(height: 31),
+            Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (context) => const CreatePasswordView(),
+                      ),
+                    ),
+                    text: "Verify",
+                    padding: const EdgeInsetsDirectional.symmetric(vertical: 25),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  //todo add send again action
+                  onTap: () => {},
+                  child: RichText(
+                    text: TextSpan(
+                      style: theme.textTheme.labelMedium,
+                      children: [
+                        TextSpan(
+                          text: "Didn’t receive the code?",
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.onTertiary,
+                            fontVariations: [const FontVariation("wght", 400)],
+                          ),
+                        ),
+                        TextSpan(
+                          text: "Resend",
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontVariations: [const FontVariation("wght", 400)],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

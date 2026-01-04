@@ -20,36 +20,35 @@ class AppOtp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return PinCodeTextField(
       appContext: context,
       length: length,
       keyboardType: textInputType ?? TextInputType.number,
-      textStyle: TextTheme.of(
-        context,
-      ).displayMedium?.copyWith(fontSize: 20, fontWeight: FontWeight.w400),
+      textStyle: theme.textTheme.titleLarge,
       animationType: AnimationType.fade,
       hintCharacter: enableHint ?? true ? "_" : null,
       hintStyle: enableHint ?? true
-          ? Theme.of(context).textTheme.titleMedium?.copyWith(
+          ? theme.textTheme.titleMedium?.copyWith(
               fontSize: 25,
               fontVariations: <FontVariation>[const FontVariation('wght', 700)],
             )
           : null,
       enableActiveFill: true,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      cursorColor: Theme.of(context).hintColor,
+      cursorColor: theme.hintColor,
       cursorWidth: 3,
       pinTheme: PinTheme(
         fieldWidth: fieldWidth,
         fieldHeight: fieldHeight,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         shape: PinCodeFieldShape.box,
-        selectedFillColor:Theme.of(context).colorScheme.surface,
-        activeFillColor: Theme.of(context).colorScheme.surface,
-        inactiveFillColor: Theme.of(context).colorScheme.surface,
-        inactiveColor: Theme.of(context).colorScheme.outline,
-        selectedColor: Theme.of(context).colorScheme.outline,
-        activeColor: Theme.of(context).colorScheme.outline,
+        selectedFillColor:theme.colorScheme.secondary,
+        activeFillColor: theme.colorScheme.secondary,
+        inactiveFillColor: theme.colorScheme.secondary,
+        inactiveColor: theme.colorScheme.secondary,
+        selectedColor: theme.primaryColor,
+        activeColor: theme.primaryColor,
       ),
     );
   }
