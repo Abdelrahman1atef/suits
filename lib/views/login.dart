@@ -11,12 +11,11 @@ import 'forget_password.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  Widget build(BuildContext viewContext) {
+    final theme = Theme.of(viewContext);
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  const CustomAppBar(
         haveTitle: true,
         haveSearchBar: false,
         title: "Login",
@@ -58,7 +57,7 @@ class LoginView extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.push(
-                          context,
+                          viewContext,
                           MaterialPageRoute<void>(
                             builder: (context) => const ForgetPasswordView(),
                           ),
@@ -80,7 +79,7 @@ class LoginView extends StatelessWidget {
                         child: AppButton(
                           onPressed: () {
                             showDialog<void>(
-                              context: context,
+                              context: viewContext,
                               builder: (context) => AlertDialog(
                                 backgroundColor: theme.scaffoldBackgroundColor,
                                 title: Container(
@@ -123,14 +122,23 @@ class LoginView extends StatelessWidget {
                                               horizontal: 47,
                                               vertical: 21,
                                             ),
-                                        onPressed: () =>
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute<void>(
-                                                builder: (context) =>
-                                                    const HomeView(),
-                                              ),
-                                            ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Future<void>.delayed(
+                                            const Duration(milliseconds: 500),
+                                            () {
+                                              if (viewContext.mounted) {
+                                                Navigator.pushReplacement(
+                                                  viewContext,
+                                                  MaterialPageRoute<void>(
+                                                    builder: (context) =>
+                                                        const HomeView(),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
@@ -147,7 +155,7 @@ class LoginView extends StatelessWidget {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () => Navigator.pushReplacement(
-                      context,
+                      viewContext,
                       MaterialPageRoute<void>(
                         builder: (context) => const RegisterView(),
                       ),

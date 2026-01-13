@@ -1,38 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tranquility/core/widgets/app_button.dart';
-import 'package:tranquility/core/widgets/app_text.dart';
-import 'package:tranquility/views/about_us.dart';
-import 'package:tranquility/views/assistant.dart';
-import 'package:tranquility/views/home/pages/chats.dart';
-import 'package:tranquility/views/home/pages/profile.dart';
-import 'package:tranquility/views/home/pages/quotes.dart';
+import 'package:suits/views/home/pages/cart.dart';
+import 'package:suits/views/home/pages/fav.dart';
+import 'package:suits/views/home/pages/home/home.dart';
+import 'package:suits/views/home/pages/profile.dart';
 
 import '../../../core/widgets/app_Image.dart';
 import '../../../core/widgets/app_bar.dart';
-import '../../suggestions.dart';
 
-part 'drawer.dart';
-
-class MainView extends StatefulWidget {
-  const MainView({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<MainView> createState() => _MainViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _MainViewState extends State<MainView> {
+class _HomeViewState extends State<HomeView> {
   final screens = [
-    _MainViewItem(widget: const ChatsPage(), title: "Chats"),
-    _MainViewItem(widget: const QuotesPage(), title: "Quotes"),
-    _MainViewItem(widget: const ProfilePage(), title: "Edit Profile"),
+    const HomePage(),
+    const CartPage(),
+    const FavPage(),
+    const ProfilePage(),
   ];
   int currentScreen = 0;
   late String title;
 
   @override
   void initState() {
-    title = screens[0].title;
     super.initState();
   }
 
@@ -40,69 +33,71 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      drawer: DrawerTheme(data: theme.drawerTheme, child: const AppDrawer()),
-      floatingActionButton: AppButton(
-        onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (context) => const AssistantView(),)),
-        isChildIcon: true,
-        padding: const EdgeInsetsDirectional.all(10),
-        icon: const AppImage(image: "assistent_white.svg",),
-      ),
       appBar: CustomAppBar(
         haveTitle: true,
         haveSearchBar: false,
-        centerTitle: false,
-        title: title,
+        centerTitle: currentScreen == 0 ? false : true,
+        title: currentScreen == 0
+            ? "Hello Safia"
+            : currentScreen == 1
+            ? "My Cart"
+            : currentScreen == 2
+            ? "Favourites"
+            : "Profile",
+        textStyle: currentScreen != 0
+            ? null
+            : theme.textTheme.titleMedium?.copyWith(
+                fontSize: 25,
+                fontVariations: [const FontVariation("wght", 700)],
+              ),
       ),
       body: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
-        body: IndexedStack(
-          index: currentScreen,
-          children: screens.map((e) => e.widget).toList(),
-        ),
+        body: IndexedStack(index: currentScreen, children: screens),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: theme.primaryColor),
+        decoration: const BoxDecoration(color: Color(0xFFF9F9F9)),
         child: BottomNavigationBarTheme(
           data: const BottomNavigationBarThemeData(
             type: BottomNavigationBarType.fixed,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             enableFeedback: false,
-            unselectedLabelStyle: TextStyle(fontSize: 14),
-            selectedLabelStyle: TextStyle(fontSize: 14),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white,
-            // selectedLabelStyle: Theme.of(context).textTheme.labelSmall,
           ),
           child: BottomNavigationBar(
             currentIndex: currentScreen,
             onTap: (value) {
               setState(() {
-                title = screens[value].title;
                 currentScreen = value;
               });
             },
 
             items: const [
               BottomNavigationBarItem(
-                icon: AppImage(image: "unselected_chats.svg", width: 30),
-                activeIcon: AppImage(image: "selected_chats.svg", width: 30),
-                tooltip: "Chats",
-                label: "Chats",
+                icon: AppImage(image: "unselected_home.svg", width: 24),
+                activeIcon: AppImage(image: "selected_home.svg", width: 24),
+                tooltip: "Home",
+                label: "",
               ),
               BottomNavigationBarItem(
-                icon: AppImage(image: "unselected_quotes.svg", width: 30),
-                activeIcon: AppImage(image: "selected_quotes.svg", width: 30),
-                tooltip: "Quotes",
-                label: "Quotes",
+                icon: AppImage(image: "unselected_cart.svg", width: 24),
+                activeIcon: AppImage(image: "selected_cart.svg", width: 24),
+                tooltip: "Cart",
+                label: "",
               ),
               BottomNavigationBarItem(
-                icon: AppImage(image: "unselected_profile.svg", width: 30),
-                activeIcon: AppImage(image: "selected_profile.svg", width: 30),
+                icon: AppImage(image: "unselected_fav.svg", width: 24),
+                activeIcon: AppImage(image: "selected_fav.svg", width: 24),
+                tooltip: "Favourites",
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: AppImage(image: "unselected_profile.svg", width: 24),
+                activeIcon: AppImage(image: "selected_profile.svg", width: 24),
                 tooltip: "Profile",
-                label: "Profile",
+                label: "",
               ),
             ],
           ),
@@ -110,11 +105,4 @@ class _MainViewState extends State<MainView> {
       ),
     );
   }
-}
-
-class _MainViewItem {
-  final Widget widget;
-  final String title;
-
-  _MainViewItem({required this.widget, required this.title});
 }

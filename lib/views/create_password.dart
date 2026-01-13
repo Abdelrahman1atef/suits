@@ -64,6 +64,7 @@ class CreatePasswordView extends StatelessWidget {
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+
                               AppText(
                                 "Success",
                                 style: theme.textTheme.titleLarge?.copyWith(
@@ -114,3 +115,4 @@ class CreatePasswordView extends StatelessWidget {
     );
   }
 }
+

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:suits/views/home/view.dart';
 import 'package:suits/views/login.dart';
 
 
 void main() {
   runApp(
-    DevicePreview(enabled: true, builder: (context) => const Suits(),),
+    DevicePreview(enabled: false, builder: (context) => const Suits(),),
   );
 }
 
@@ -15,7 +16,7 @@ class Suits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const LoginView(),
+      home: const HomeView(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: const TextTheme(
@@ -45,7 +46,7 @@ class Suits extends StatelessWidget {
           ),
           bodyLarge: TextStyle(
             fontFamily: "Inter",
-            color: Color(0xFFFFFFFF),
+            color: Color(0xFF000000),
             fontVariations: [FontVariation("wght", 700)],
             fontSize: 20,
           ),

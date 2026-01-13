@@ -10,7 +10,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.haveAction,
     this.centerTitle,
     this.haveDrawer,
-    this.backgroundColor,
+    this.backgroundColor, this.textStyle,
   });
 
   final Color? backgroundColor;
@@ -18,6 +18,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool? haveAction, centerTitle;
   final String? title;
   final bool? haveDrawer;
+  final TextStyle? textStyle;
 
   @override
   Size get preferredSize => Size.fromHeight(
@@ -39,16 +40,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
       scrolledUnderElevation: 0,
       leading: Navigator.canPop(context)
           ? GestureDetector(
-        onTap: () => Navigator.pop(context),
-            child: const Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-              child: AppImage(image: "arrow_back.svg"),
-            ),
-          )
+              onTap: () => Navigator.pop(context),
+              child: const Padding(
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+                child: AppImage(image: "arrow_back.svg"),
+              ),
+            )
           : null,
       centerTitle: widget.centerTitle ?? true,
       title: widget.haveTitle
-          ? Text(widget.title ?? "", style: theme.textTheme.titleLarge)
+          ? Text(
+              widget.title ?? "",
+              style:widget.textStyle ?? theme.textTheme.titleMedium?.copyWith(fontSize: 25),
+            )
           : null,
       actionsPadding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
       // actions: widget.haveAction ?? false
