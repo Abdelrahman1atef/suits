@@ -3,13 +3,21 @@ import 'package:suits/core/widgets/app_Image.dart';
 import 'package:suits/core/widgets/app_button.dart';
 import 'package:suits/core/widgets/app_text.dart';
 
+import '../../../../core/widgets/app_filter_selector.dart';
+import '../../../product.dart';
+
 part 'widgets/category.dart';
 
 part 'widgets/title.dart';
 
-part 'widgets/filter_selector.dart';
-
 final List<String> _filter = ["All", "Newest", "Popular", "Men", "Women"];
+
+class _CategoryItem {
+  final String icon;
+  final String text;
+
+  _CategoryItem(this.icon, this.text);
+}
 
 final List<_CategoryItem> _categoryItems = [
   _CategoryItem("blazar.png", "Blazar"),
@@ -26,7 +34,6 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 17),
       child: Column(
         children: [
           Container(
@@ -35,6 +42,8 @@ class HomePage extends StatelessWidget {
               horizontal: 28,
               vertical: 18,
             ),
+            margin: const EdgeInsetsDirectional.symmetric(horizontal: 17),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -65,35 +74,41 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 28),
-          const _TitleWidget(title: "Category", hasSeeAll: true),
-          const SizedBox(height: 18),
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              itemCount: _categoryItems.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final item = _categoryItems[index];
-                return Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 25),
-                  child: _Category(icon: item.icon, text: item.text),
-                );
-              },
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 17),
+
+            child: Column(
+              children: [
+                const SizedBox(height: 28),
+                const _TitleWidget(title: "Category", hasSeeAll: true),
+                const SizedBox(height: 18),
+                SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    itemCount: _categoryItems.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final item = _categoryItems[index];
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 25),
+                        child: _Category(icon: item.icon, text: item.text),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const _TitleWidget(title: "Flash Sale", hasSeeAll: false),
+              ],
             ),
           ),
-          const SizedBox(height: 15),
-          const _TitleWidget(title: "Flash Sale", hasSeeAll: false),
-          const SizedBox(height: 30, child: _FilterSelector()),
+          SizedBox(height: 30, child: FilterSelector(filter: _filter)),
           const SizedBox(height: 30),
-          const _GridItems()
+          const _GridItems(),
         ],
       ),
     );
   }
 }
-
-
 
 class _GridItems extends StatefulWidget {
   const _GridItems();
@@ -104,16 +119,17 @@ class _GridItems extends StatefulWidget {
 
 class _GridItemsState extends State<_GridItems> {
   final List<String> _gridItems = [
-    "https://i.pinimg.com/736x/45/27/47/452747615431757300a956eb3f0c34a1.jpg",
-    "https://i.pinimg.com/736x/45/27/47/452747615431757300a956eb3f0c34a1.jpg",
-    "https://i.pinimg.com/736x/45/27/47/452747615431757300a956eb3f0c34a1.jpg",
-    "https://i.pinimg.com/736x/45/27/47/452747615431757300a956eb3f0c34a1.jpg",
+    "https://kadirbuyukkayashop.com/content/images/thumbs/67291cdb68076543077ff775_kruvaze-ceket-ak-kahve_1200.jpeg",
+    "https://kadirbuyukkayashop.com/content/images/thumbs/67291cdb68076543077ff775_kruvaze-ceket-ak-kahve_1200.jpeg",
+    "https://kadirbuyukkayashop.com/content/images/thumbs/67291cdb68076543077ff775_kruvaze-ceket-ak-kahve_1200.jpeg",
+    "https://kadirbuyukkayashop.com/content/images/thumbs/67291cdb68076543077ff775_kruvaze-ceket-ak-kahve_1200.jpeg",
   ];
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: _gridItems.length,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 17),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -124,10 +140,15 @@ class _GridItemsState extends State<_GridItems> {
       ),
       itemBuilder: (context, index) {
         final item = _gridItems[index];
-        return SizedBox(
-          width: 140,
-          height: 150,
-          child: AppImage(image: item, fit: BoxFit.cover),
+        return GestureDetector(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(builder: (context) => const ProductView()),
+          ),
+          child: SizedBox(
+            width: 140,
+            height: 150,
+            child: AppImage(image: item, fit: BoxFit.cover),
+          ),
         );
       },
     );

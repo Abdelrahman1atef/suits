@@ -19,7 +19,7 @@ class AppInputText extends StatefulWidget {
     this.borderWidth,
     this.textInputType,
     this.maxLines = 1,
-    this.borderColor, this.icon,
+    this.borderColor, this.icon, this.suffixIcon,
   });
 
   final TextEditingController? controller;
@@ -33,7 +33,7 @@ class AppInputText extends StatefulWidget {
   final double? borderRadius, borderWidth;
   final String obscuringCharacter;
   final String? title, labelText, hintText;
-  final Widget? icon;
+  final Widget? icon,suffixIcon;
 
 
   @override
@@ -128,7 +128,7 @@ class _CustomTextFormFieldState extends State<AppInputText> {
               prefixIcon:widget.icon,
               prefixIconConstraints: const BoxConstraints(minWidth: 50),
               suffixIconConstraints: const BoxConstraints(minWidth: 50),
-              suffixIcon: widget.isPasswordField
+              suffixIcon: widget.suffixIcon ?? (widget.isPasswordField
                   ? passwordIsHidden
                         ? IconButton(
                             icon: const AppImage(image: "visibility_off.png"),
@@ -146,7 +146,7 @@ class _CustomTextFormFieldState extends State<AppInputText> {
                               });
                             },
                           )
-                  : null,
+                  : null),
             ),
           ),
         ),

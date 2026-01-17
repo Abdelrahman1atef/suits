@@ -23,7 +23,6 @@ class _HomeViewState extends State<HomeView> {
   ];
   int currentScreen = 0;
   late String title;
-
   @override
   void initState() {
     super.initState();
@@ -33,28 +32,27 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: CustomAppBar(
-        haveTitle: true,
-        haveSearchBar: false,
-        centerTitle: currentScreen == 0 ? false : true,
-        title: currentScreen == 0
-            ? "Hello Safia"
-            : currentScreen == 1
-            ? "My Cart"
-            : currentScreen == 2
-            ? "Favourites"
-            : "Profile",
-        textStyle: currentScreen != 0
-            ? null
-            : theme.textTheme.titleMedium?.copyWith(
-                fontSize: 25,
-                fontVariations: [const FontVariation("wght", 700)],
-              ),
-      ),
-      body: Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        body: IndexedStack(index: currentScreen, children: screens),
-      ),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar:  CustomAppBar(
+              haveTitle: true,
+              haveSearchBar: false,
+              centerTitle: currentScreen == 0 ? false : true,
+              title: currentScreen == 0
+                  ? "Hello Safia"
+                  : currentScreen == 1
+                  ? "My Cart"
+                  : currentScreen == 2
+                  ? "Favourites"
+                  : "Profile",
+              textStyle: currentScreen != 0
+                  ? null
+                  : theme.textTheme.titleMedium?.copyWith(
+                      fontSize: 25,
+                      fontVariations: [const FontVariation("wght", 700)],
+                    ),
+            )
+          ,
+      body: IndexedStack(index: currentScreen, children: screens,),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(color: Color(0xFFF9F9F9)),
         child: BottomNavigationBarTheme(

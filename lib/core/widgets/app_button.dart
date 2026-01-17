@@ -14,33 +14,35 @@ class AppButton extends StatelessWidget {
     this.isGradientColored,
     this.shape,
     this.text,
-    this.margin, this.textStyle, this.widget,
+    this.margin, this.textStyle, this.widget, this.width, this.height, this.border,
   });
 
   final void Function()? onPressed;
   final Widget? icon,widget;
   final Color? color;
   final bool? isChildIcon;
-  final double? borderRadius;
+  final double? borderRadius,width,height;
   final EdgeInsetsDirectional? margin, padding;
   final bool? isGradientColored;
   final OutlinedBorder? shape;
   final String? text;
   final TextStyle? textStyle;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final double borderRadius=32;
     return Container(
-      height: isChildIcon ?? false ? 60 : null,
-      width: isChildIcon ?? false ? 60 : null,
+      height: height ?? (isChildIcon == true ? 60 : null),
+      width:  width  ?? (isChildIcon == true ? 60 : null),
       margin: margin ?? const EdgeInsetsDirectional.all(0),
       decoration: BoxDecoration(
         color: isGradientColored ?? false
             ? Colors.transparent
             : color ?? theme.primaryColor,
         borderRadius: BorderRadiusGeometry.circular(this.borderRadius ?? borderRadius),
+        border: border,
         gradient: isGradientColored ?? false
             ? LinearGradient(
                 colors: [
@@ -74,7 +76,7 @@ class AppButton extends StatelessWidget {
             ? icon
             :text!=null? AppText(
                 text ?? "",
-                style: textStyle ??Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium?.merge(textStyle),
               ):widget,
       ),
     );

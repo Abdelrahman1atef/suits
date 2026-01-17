@@ -1,24 +1,28 @@
-part of '../home.dart';
 
-class _FilterSelector extends StatefulWidget {
-  const _FilterSelector();
+import 'package:flutter/material.dart';
 
+import 'app_text.dart';
+
+class FilterSelector extends StatefulWidget {
+  const FilterSelector( {super.key,required this.filter,});
+  final List<String> filter ;
   @override
-  State<_FilterSelector> createState() => _FilterSelectorState();
+  State<FilterSelector> createState() => _FilterSelectorState();
 }
 
-class _FilterSelectorState extends State<_FilterSelector> {
-  String selectedItem =_filter.first;
+class _FilterSelectorState extends State<FilterSelector> {
+  late String selectedItem = widget.filter.first;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = theme.colorScheme;
     final textTheme = theme.textTheme;
     return ListView.builder(
-      itemCount: _filter.length,
+      itemCount: widget.filter.length,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 17),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final item = _filter[index];
+        final item = widget.filter[index];
         Color selectedItemColor = theme.primaryColor;
         Color unselectedItemColor = color.secondary;
         bool isSelected = item == selectedItem;
@@ -49,11 +53,4 @@ class _FilterSelectorState extends State<_FilterSelector> {
       },
     );
   }
-}
-
-class _CategoryItem {
-  final String icon;
-  final String text;
-
-  _CategoryItem(this.icon, this.text);
 }
