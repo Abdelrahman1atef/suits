@@ -17,23 +17,31 @@ class AppInputText extends StatefulWidget {
     this.borderRadius,
     this.fillColor,
     this.borderWidth,
-    this.textInputType,
+    this.keyboardType,
     this.maxLines = 1,
-    this.borderColor, this.icon, this.suffixIcon,
+    this.borderColor,
+    this.icon,
+    this.suffixIcon,
+    this.filled,
+    this.onTap,
+    this.onChanged, this.textStyle,
   });
 
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final EdgeInsetsGeometry? padding;
-  final TextInputType? textInputType;
+  final TextInputType? keyboardType;
   final Color? fillColor, borderColor;
   final bool isPasswordField;
-  final bool? haveTitle;
+  final bool? haveTitle, filled;
   final int maxLines;
   final double? borderRadius, borderWidth;
   final String obscuringCharacter;
   final String? title, labelText, hintText;
-  final Widget? icon,suffixIcon;
+  final Widget? icon, suffixIcon;
+  final VoidCallback? onTap;
+  final void Function(String)? onChanged;
+  final TextStyle? textStyle;
 
 
   @override
@@ -53,29 +61,24 @@ class _CustomTextFormFieldState extends State<AppInputText> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.haveTitle ?? false) ...{
-          Text(widget.title ?? "", style: theme.textTheme.titleSmall),
+          Padding(
+            padding: const EdgeInsetsGeometry.symmetric(horizontal: 13),
+            child: Text(widget.title ?? "", style: theme.textTheme.titleSmall),
+          ),
           const SizedBox(height: 10),
         },
         InputDecorationTheme(
-          //todo review this
-          // data:Theme.of(context).inputDecorationTheme,
-          labelStyle: theme.textTheme.titleMedium,
-          filled: true,
+          labelStyle: theme.textTheme.titleMedium?.copyWith(color: const Color(0xFF727272)),
+          filled: widget.filled ?? true,
           fillColor: widget.fillColor ?? theme.colorScheme.surface,
-          floatingLabelStyle: TextTheme.of(
-            context,
-          ).titleMedium?.copyWith(fontSize: 25),
+          floatingLabelStyle: theme.textTheme.titleMedium?.copyWith(color: const Color(0xFF727272), fontSize: 20),
           hintMaxLines: 1,
           hintStyle: theme.textTheme.labelLarge,
-          contentPadding:
-              widget.padding ??
-              const EdgeInsetsGeometry.symmetric(vertical: 20, horizontal: 10),
+          contentPadding: widget.padding ?? const EdgeInsetsGeometry.symmetric(vertical: 20, horizontal: 10),
 
           focusedBorder: OutlineInputBorder(
             gapPadding: 16,
-            borderRadius: BorderRadius.circular(
-              widget.borderRadius ?? borderRadius,
-            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? borderRadius),
             borderSide: BorderSide(
               color: widget.borderColor ?? theme.colorScheme.outline,
               width: widget.borderWidth ?? borderWidth,
@@ -83,9 +86,7 @@ class _CustomTextFormFieldState extends State<AppInputText> {
           ),
           enabledBorder: OutlineInputBorder(
             gapPadding: 16,
-            borderRadius: BorderRadius.circular(
-              widget.borderRadius ?? borderRadius,
-            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? borderRadius),
             borderSide: BorderSide(
               color: widget.borderColor ?? theme.colorScheme.outline,
               width: widget.borderWidth ?? borderWidth,
@@ -95,59 +96,53 @@ class _CustomTextFormFieldState extends State<AppInputText> {
           errorStyle: textTheme.displaySmall,
           errorBorder: OutlineInputBorder(
             gapPadding: 16,
-            borderRadius: BorderRadius.circular(
-              widget.borderRadius ?? borderRadius,
-            ),
-            borderSide: BorderSide(
-              color: theme.colorScheme.error,
-              width: widget.borderWidth ?? borderWidth,
-            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? borderRadius),
+            borderSide: BorderSide(color: theme.colorScheme.error, width: widget.borderWidth ?? borderWidth),
           ),
           focusedErrorBorder: OutlineInputBorder(
             gapPadding: 16,
-            borderRadius: BorderRadius.circular(
-              widget.borderRadius ?? borderRadius,
-            ),
-            borderSide: BorderSide(
-              color: theme.colorScheme.error,
-              width: widget.borderWidth ?? borderWidth,
-            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? borderRadius),
+            borderSide: BorderSide(color: theme.colorScheme.error, width: widget.borderWidth ?? borderWidth),
           ),
 
           child: TextFormField(
             controller: widget.controller,
             validator: widget.validator,
-            style: theme.textTheme.displayMedium,
+            style: theme.textTheme.displayMedium?.merge(widget.textStyle),
             obscureText: widget.isPasswordField ? passwordIsHidden : false,
             obscuringCharacter: widget.obscuringCharacter,
-            keyboardType: widget.textInputType,
+            keyboardType: widget.keyboardType,
             maxLines: widget.maxLines,
             decoration: InputDecoration(
               labelText: widget.labelText,
               hintText: widget.hintText ?? "",
-              prefixIcon:widget.icon,
+              prefixIcon: widget.icon,
               prefixIconConstraints: const BoxConstraints(minWidth: 50),
               suffixIconConstraints: const BoxConstraints(minWidth: 50),
-              suffixIcon: widget.suffixIcon ?? (widget.isPasswordField
-                  ? passwordIsHidden
-                        ? IconButton(
-                            icon: const AppImage(image: "visibility_off.png"),
-                            onPressed: () {
-                              setState(() {
-                                passwordIsHidden = false;
-                              });
-                            },
-                          )
-                        : IconButton(
-                            icon: const AppImage(image: "visibility.svg"),
-                            onPressed: () {
-                              setState(() {
-                                passwordIsHidden = true;
-                              });
-                            },
-                          )
-                  : null),
+              suffixIcon:
+                  widget.suffixIcon ??
+                  (widget.isPasswordField
+                      ? passwordIsHidden
+                            ? IconButton(
+                                icon: const AppImage(image: "visibility_off.png"),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordIsHidden = false;
+                                  });
+                                },
+                              )
+                            : IconButton(
+                                icon: const AppImage(image: "visibility.svg"),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordIsHidden = true;
+                                  });
+                                },
+                              )
+                      : null),
             ),
+            onChanged: widget.onChanged,
+            onTap: widget.onTap,
           ),
         ),
       ],

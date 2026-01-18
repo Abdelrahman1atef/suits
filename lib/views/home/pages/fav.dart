@@ -24,7 +24,7 @@ class FavPage extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
-              childAspectRatio: 0.95,
+              childAspectRatio: 0.8,
               crossAxisCount: 2,
             ),
             itemBuilder: (context, index) {

@@ -4,31 +4,15 @@ import 'package:suits/core/widgets/app_image.dart';
 import 'package:suits/core/widgets/app_input_text.dart';
 import 'package:suits/views/checkout.dart';
 
+import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_text.dart';
 
-class _CartItem {
-  final int id;
-  final String image;
-  final String name;
-  final String size;
-  final double price;
-  final int count;
-
-  _CartItem({
-    required this.image,
-    required this.name,
-    required this.size,
-    required this.price,
-    required this.count,
-    required this.id,
-  });
-}
 
 final cartItems = [
-  _CartItem(id: 1, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
-  _CartItem(id: 2, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
-  _CartItem(id: 3, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
-  _CartItem(id: 4, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
+  CartItem(id: 1, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
+  CartItem(id: 2, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
+  CartItem(id: 3, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
+  CartItem(id: 4, image: "onboarding2.jpg", name: "Classic Blazar", size: "xl", price: 83.97, count: 1),
 ];
 
 class CartPage extends StatefulWidget {
@@ -44,9 +28,9 @@ class _CartPageState extends State<CartPage> {
     final theme = Theme.of(context);
     final color = theme.colorScheme;
     final textTheme = theme.textTheme;
+    final checkOutTextStyle = textTheme.displayMedium?.copyWith(color: const Color(0xFF858585));
     return Scaffold(
       body: ListView.separated(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 17),
         separatorBuilder: (context, index) => const Divider(),
         itemCount: cartItems.length,
         itemBuilder: (context, index) {
@@ -89,10 +73,10 @@ class _CartPageState extends State<CartPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const Divider(),
-                                  _CardItem(item: item),
+                                  CardItem(item: item),
                                 ],
                               ),
-                              SizedBox(height: 61),
+                              const SizedBox(height: 61),
                               Row(
                                 spacing: 14,
                                 children: [
@@ -129,7 +113,7 @@ class _CartPageState extends State<CartPage> {
             },
             direction: DismissDirection.endToStart,
             dismissThresholds: const {DismissDirection.endToStart: 0.5},
-            child: _CardItem(item: item),
+            child: CardItem(item: item),
           );
         },
       ),
@@ -157,34 +141,35 @@ class _CartPageState extends State<CartPage> {
               borderColor: Color(0xFFB5B5B5),
             ),
             const SizedBox(height: 13),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [AppText("Sub-Total"), AppText("\$407.94")],
+              children: [AppText("Sub-Total",style: checkOutTextStyle,), const AppText("\$407.94")],
             ),
             const SizedBox(height: 13),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [AppText("Delivery Free"), AppText("\$25.00")],
+              children: [AppText("Delivery Free",style: checkOutTextStyle,), const AppText("\$25.00")],
             ),
             const SizedBox(height: 13),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [AppText("Discount"), AppText("-\$35.00")],
+              children: [AppText("Discount",style: checkOutTextStyle,), const AppText("-\$35.00")],
             ),
             const SizedBox(height: 13),
-            const AppText(
-              '----------------------------------------------------',
+            AppText(
+              "-"*100,
+              style: checkOutTextStyle,
               maxLines: 1,
               overflow: TextOverflow.clip,
             ),
             const SizedBox(height: 13),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [AppText("Total Cost"), AppText("\$397.94")],
+              children: [AppText("Total Cost",style: checkOutTextStyle,), const AppText("\$397.94")],
             ),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: 42),
+            Container(
+              margin: const EdgeInsetsDirectional.symmetric(horizontal: 32),
               child: Row(
                 children: [
                   Expanded(
@@ -192,6 +177,7 @@ class _CartPageState extends State<CartPage> {
                       onPressed: () =>
                           Navigator.push(context, MaterialPageRoute<void>(builder: (context) => const CheckoutView())),
                       text: "Proceed to Checkout",
+                      textStyle: const TextStyle(fontVariations: [FontVariation("wght", 500)]),
                       padding: const EdgeInsetsDirectional.symmetric(),
                       borderRadius: 15,
                     ),
@@ -202,89 +188,6 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _CardItem extends StatelessWidget {
-  const _CardItem({required this.item});
-
-  final _CartItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(vertical: 20, horizontal: 17),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AppImage(image: item.image, width: 120, height: 140, fit: BoxFit.cover),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 15,
-            children: [AppText(item.name), AppText("Size:${item.size}"), AppText("\$${item.price}")],
-          ),
-          _Counter(count: item.count),
-        ],
-      ),
-    );
-  }
-}
-
-class _Counter extends StatefulWidget {
-  const _Counter({required this.count});
-
-  final int count;
-
-  @override
-  State<_Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<_Counter> {
-  int count = 1;
-
-  @override
-  void initState() {
-    count = widget.count;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = theme.colorScheme;
-    return Row(
-      spacing: 9,
-      children: [
-        AppButton(
-          width: 30,
-          height: 30,
-          icon: const AppText("-", style: TextStyle(fontSize: 25)),
-          isChildIcon: true,
-          margin: const EdgeInsetsDirectional.all(0),
-          padding: const EdgeInsetsDirectional.all(0),
-          borderRadius: 5,
-          color: color.secondary,
-          onPressed: () => setState(() {
-            if (count > 1) {
-              count--;
-            }
-          }),
-        ),
-        AppText(count.toString()),
-        AppButton(
-          width: 30,
-          height: 30,
-          icon: AppText("+", style: TextStyle(fontSize: 25, color: color.onPrimary)),
-          margin: const EdgeInsetsDirectional.all(0),
-          padding: const EdgeInsetsDirectional.all(0),
-          borderRadius: 5,
-          isChildIcon: true,
-          onPressed: () => setState(() {
-            count++;
-          }),
-        ),
-      ],
     );
   }
 }

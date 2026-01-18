@@ -17,11 +17,13 @@ class AppAddImage extends StatefulWidget {
 
 class _AppAddImageState extends State<AppAddImage> {
   String imagePath = "";
+
   @override
   void initState() {
-    imagePath=widget.imagePath??"";
+    imagePath = widget.imagePath ?? "";
     super.initState();
   }
+
   Future<void> pickFromCamera() async {
     final picker = ImagePicker();
     final status = await Permission.camera.request();
@@ -51,10 +53,7 @@ class _AppAddImageState extends State<AppAddImage> {
   void showPickerSheet() {
     showModalBottomSheet<void>(
       context: context,
-      builder: (_) => _PickerSheet(
-        onCameraTap: pickFromCamera,
-        onGalleryTap: pickFromGallery,
-      ),
+      builder: (_) => _PickerSheet(onCameraTap: pickFromCamera, onGalleryTap: pickFromGallery),
     );
   }
 
@@ -62,24 +61,20 @@ class _AppAddImageState extends State<AppAddImage> {
   Widget build(BuildContext context) {
     return widget.shapeIsCircle
         ? _CirclePicker(
-      imagePath: imagePath,
-      onPickTap: showPickerSheet,
-      onDeleteTap: () => setState(() => imagePath = ""),
-    )
+            imagePath: imagePath,
+            onPickTap: showPickerSheet,
+            onDeleteTap: () => setState(() => imagePath = ""),
+          )
         : _RectanglePicker(
-      hasImage: imagePath.isNotEmpty,
-      onTap: showPickerSheet,
-      child: imagePath.isNotEmpty
-          ? AppImage(image: imagePath, height: 100, fit: BoxFit.cover)
-          : null,
-    );
+            hasImage: imagePath.isNotEmpty,
+            onTap: showPickerSheet,
+            child: imagePath.isNotEmpty ? AppImage(image: imagePath, height: 100, fit: BoxFit.cover) : null,
+          );
   }
 }
+
 class _PickerSheet extends StatelessWidget {
-  const _PickerSheet({
-    required this.onCameraTap,
-    required this.onGalleryTap,
-  });
+  const _PickerSheet({required this.onCameraTap, required this.onGalleryTap});
 
   final VoidCallback onCameraTap;
   final VoidCallback onGalleryTap;
@@ -94,27 +89,29 @@ class _PickerSheet extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppText("Pick Image From",
-              style: theme.textTheme.titleMedium),
+          AppText("Pick Image From", style: theme.textTheme.titleMedium),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              InkWell(onTap: onCameraTap, child: const AppImage(image: "camera.svg")),
-              InkWell(onTap: onGalleryTap, child: const AppImage(image: "gallary.svg")),
+              InkWell(
+                onTap: onCameraTap,
+                child: const AppImage(image: "camera.svg"),
+              ),
+              InkWell(
+                onTap: onGalleryTap,
+                child: const AppImage(image: "gallary.svg"),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 }
+
 class _CirclePicker extends StatelessWidget {
-  const _CirclePicker({
-    required this.imagePath,
-    required this.onPickTap,
-    required this.onDeleteTap,
-  });
+  const _CirclePicker({required this.imagePath, required this.onPickTap, required this.onDeleteTap});
 
   final String imagePath;
   final VoidCallback onPickTap;
@@ -132,23 +129,16 @@ class _CirclePicker extends StatelessWidget {
           imagePath.isEmpty
               ? const AppImage(image: "pick_image.svg")
               : ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: AppImage(
-              image: imagePath,
-              height: 200,
-              width: 200,
-              fit: BoxFit.cover,
-            ),
-          ),
+                  borderRadius: BorderRadius.circular(100),
+                  child: AppImage(image: imagePath, height: 200, width: 200, fit: BoxFit.cover),
+                ),
 
           Positioned(
             bottom: 0,
             right: 0,
             child: CircleAvatar(
               backgroundColor: theme.primaryColor,
-              child: AppImage(
-                image: imagePath.isEmpty ? "add.svg" : "edit.svg",
-              ),
+              child: AppImage(image: imagePath.isEmpty ? "add.svg" : "edit.svg"),
             ),
           ),
 
@@ -159,8 +149,7 @@ class _CirclePicker extends StatelessWidget {
               child: GestureDetector(
                 onTap: onDeleteTap,
                 child: CircleAvatar(
-                  backgroundColor:
-                  theme.primaryColor.withValues(alpha: 0.25),
+                  backgroundColor: theme.primaryColor.withValues(alpha: 0.25),
                   child: const AppImage(image: "delete_chat.svg"),
                 ),
               ),
@@ -170,12 +159,9 @@ class _CirclePicker extends StatelessWidget {
     );
   }
 }
+
 class _RectanglePicker extends StatelessWidget {
-  const _RectanglePicker({
-    required this.hasImage,
-    required this.onTap,
-    this.child,
-  });
+  const _RectanglePicker({required this.hasImage, required this.onTap, this.child});
 
   final bool hasImage;
   final VoidCallback onTap;
@@ -194,32 +180,25 @@ class _RectanglePicker extends StatelessWidget {
           onTap: onTap,
           child: hasImage
               ? Stack(
-            children: [
-              child!,
-              const Positioned(
-                top: 10,
-                left: 10,
-                child: AppImage(image: "camera.svg", width: 24),
-              ),
-            ],
-          )
+                  children: [
+                    child!,
+                    const Positioned(top: 10, left: 10, child: AppImage(image: "camera.svg", width: 24)),
+                  ],
+                )
               : Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(18),
-              child: Column(
-                children: [
-                  AppImage(image: "camera.svg"),
-                  SizedBox(height: 10),
-                  AppText("الملفات المسموح بيها : JPEG , PNG"),
-                  AppText("الحد الاقصي : 5MB"),
-                ],
-              ),
-            ),
-          ),
+                  decoration: BoxDecoration(color: theme.colorScheme.surface, borderRadius: BorderRadius.circular(8)),
+                  child: const Padding(
+                    padding: EdgeInsets.all(18),
+                    child: Column(
+                      children: [
+                        AppImage(image: "camera.svg"),
+                        SizedBox(height: 10),
+                        AppText("الملفات المسموح بيها : JPEG , PNG"),
+                        AppText("الحد الاقصي : 5MB"),
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ],
     );

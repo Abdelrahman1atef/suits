@@ -43,7 +43,8 @@ dependencies:
   dotted_border:
   permission_handler:
   image_picker:
-  device_preview: any
+  device_preview:
+  flutter_credit_card:
 dev_dependencies:
   flutter_test:
     sdk: flutter

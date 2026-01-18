@@ -3,7 +3,7 @@ import 'package:suits/core/widgets/app_Image.dart';
 import 'package:suits/core/widgets/app_text.dart';
 
 import '../../../core/widgets/app_button.dart';
-import '../../payment.dart';
+import '../../payment_methods.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -55,7 +55,7 @@ class _ProfileItems extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (index == 2) {
-              Navigator.push(context, MaterialPageRoute<void>(builder: (context) => const PaymentView()));
+              Navigator.push(context, MaterialPageRoute<void>(builder: (context) => const PaymentMethodsView()));
             }
             if (index == 5) {
               showDialog<bool>(
