@@ -1,32 +1,89 @@
 # Suits
 
 Fashion e-commerce Flutter app (UI + navigation prototype).
+# 👔 Suits
 
-## Screenshots
-| Splash | Auth - Login |
-| --- | --- |
-| ![Splash](https://github.com/user-attachments/assets/7e166a62-d395-4ae2-bdb4-2f975c57a3fc) | ![Login](https://github.com/user-attachments/assets/362d42a8-70af-4520-8a98-01da32716709) |
+**Fashion E-Commerce Mobile App (Flutter UI & Navigation Prototype)**
 
-| Auth - Register | Auth - OTP |
-| --- | --- |
-| ![Register](https://github.com/user-attachments/assets/9c8cea6a-e374-441a-b98b-a5b31d01c575) | ![OTP](https://github.com/user-attachments/assets/41749b60-a73a-4197-b924-875903d96128) |
+A modern, cleanly designed fashion shopping application built with **Flutter**, focusing on **UI/UX, navigation flows, and reusable components**.  
+This project serves as a **scalable foundation** for a full e-commerce app, ready for API integration and state management.
 
-| Success dialog | Home |
-| --- | --- |
-| ![Success Dialog](https://github.com/user-attachments/assets/ae4668d6-216f-4511-bca6-6e6c5b564bef) | ![Home](https://github.com/user-attachments/assets/ba05aaf9-d080-4bb9-b04a-e936f44f6e00) |
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ba05aaf9-d080-4bb9-b04a-e936f44f6e00" width="280"/>
+</p>
 
-| Cart | Favourite items |
-| --- | --- |
-| ![Cart](https://github.com/user-attachments/assets/c5de7304-3f41-4e75-b0ae-0e48eef8b60f) | ![Favourites](https://github.com/user-attachments/assets/51697e20-0830-4fff-9ce3-918c4c9b7592) |
+---
 
-| Profile | Product details |
-| --- | --- |
-| ![Profile](https://github.com/user-attachments/assets/b726ad09-b57e-4b72-bf09-ee29825d7e0f) | ![Product details](https://github.com/user-attachments/assets/945205a3-93d9-490a-a8e2-ec75b55a71ef) |
+## ✨ Features
 
-| Checkout | Payment success |
-| --- | --- |
-| ![Checkout](https://github.com/user-attachments/assets/558a9859-daef-4bed-8e23-669adb0231e7) | ![Payment success](https://github.com/user-attachments/assets/16af034a-27f5-4e79-904c-56a865e88085) |
+### 🔐 Authentication
+- Splash screen with animated logo
+- Onboarding with swipe navigation and skip option
+- Login & registration screens
+- OTP verification flow
+- Success dialogs and confirmations
 
+### 🏠 Main App
+- Bottom navigation with:
+  - Home
+  - Cart
+  - Favourites
+  - Profile
+- Product listing and product details
+- Size, color, and quantity selectors
+
+### 🛒 Cart & Checkout
+- Cart items list with swipe-to-remove
+- Promo code input
+- Checkout flow with shipping address
+- Payment methods selection
+- Payment success confirmation
+
+---
+
+## 📱 Screenshots
+
+### 🔐 Authentication Flow
+| Splash | Login | Register | OTP |
+| --- | --- | --- | --- |
+| <img src="https://github.com/user-attachments/assets/7e166a62-d395-4ae2-bdb4-2f975c57a3fc" width="160"/> | <img src="https://github.com/user-attachments/assets/362d42a8-70af-4520-8a98-01da32716709" width="160"/> | <img src="https://github.com/user-attachments/assets/9c8cea6a-e374-441a-b98b-a5b31d01c575" width="160"/> | <img src="https://github.com/user-attachments/assets/41749b60-a73a-4197-b924-875903d96128" width="160"/> |
+
+---
+
+### 🏠 Main Screens
+| Home | Product Details | Cart | Favourites |
+| --- | --- | --- | --- |
+| <img src="https://github.com/user-attachments/assets/ba05aaf9-d080-4bb9-b04a-e936f44f6e00" width="160"/> | <img src="https://github.com/user-attachments/assets/945205a3-93d9-490a-a8e2-ec75b55a71ef" width="160"/> | <img src="https://github.com/user-attachments/assets/c5de7304-3f41-4e75-b0ae-0e48eef8b60f" width="160"/> | <img src="https://github.com/user-attachments/assets/51697e20-0830-4fff-9ce3-918c4c9b7592" width="160"/> |
+
+---
+
+### 👤 Profile & Checkout
+| Profile | Checkout | Payment Success |
+| --- | --- | --- |
+| <img src="https://github.com/user-attachments/assets/b726ad09-b57e-4b72-bf09-ee29825d7e0f" width="160"/> | <img src="https://github.com/user-attachments/assets/558a9859-daef-4bed-8e23-669adb0231e7" width="160"/> | <img src="https://github.com/user-attachments/assets/16af034a-27f5-4e79-904c-56a865e88085" width="160"/> |
+
+---
+
+## 🧱 Project Structure
+
+```text
+lib/
+├── core/
+│   ├── theme/          # Colors, fonts, app theme
+│   ├── widgets/        # Reusable UI components
+│
+├── views/
+│   ├── splash/
+│   ├── onboarding/
+│   ├── auth/
+│   ├── home/
+│   │   ├── pages/      # Home, Cart, Favourites, Profile
+│   ├── product/
+│   ├── checkout/
+│   └── payment/
+│
+└── main.dart           # App entry point
+```
 ## Features (implemented screens)
 
 - **Splash**: animated logo then navigates to onboarding (`lib/views/splash.dart`)
